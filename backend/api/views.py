@@ -4,7 +4,6 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import UserSerializer, NoteSerializer
 from .models import Note
-
 # Create your views here.
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -19,7 +18,7 @@ class NoteListCreateView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         return Note.objects.filter(author=user)
-    
+
     def perform_create(self, serializer):
         if serializer.is_valid():
             serializer.save(author=self.request.user)
